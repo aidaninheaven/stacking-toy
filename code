@@ -1,1 +1,77 @@
+class Ring:
+    colors = {
+        "red": "red",
+        "blue": "blue",
+        "green": "green",
+        "yellow": "yellow",
+        "orange": "orange"
+    }
+    
+    def __init__(self, color):
+        self.color = self.colors.get(color, "unknown") 
+        self.onStack = False  
 
+ring1 = Ring("red")
+ring2 = Ring("orange")
+ring3 = Ring("yellow")
+ring4 = Ring("green")
+ring5 = Ring("blue")
+
+ringStack = []
+
+def push(ring):
+    if not ring.onStack:  
+        ringStack.append(ring)
+        ring.onStack = True
+        print(f"Pushed {ring.color}: {[r.color for r in ringStack]}")
+
+def pop():
+    if ringStack:
+        removedRing = ringStack.pop()
+        removedRing.onStack = False
+        print(f"Popped {removedRing.color}: {[r.color for r in ringStack]}")
+    else:
+        print("Stack is empty!")
+
+def userChoice():
+    
+    while True:
+        print("\nCurrent Stack (Top to Bottom):")
+        for r in reversed(ringStack):
+            print(r.color)
+
+
+        availableColors = [ring.color for ring in [ring1, ring2, ring3, ring4, ring5] if not ring.onStack]
+        print("\nAvailable colors to add:", ", ".join(availableColors))
+        
+        print("-----OPTIONS-----")
+        print("1. Add a ring to the top")
+        print("2. Remove topmost ring")
+        print("3. Exit")
+        
+        userInput = input("Choose an option: ")
+        
+        if userInput == "1":
+            
+            color = input("What color ring would you like to add?: ").lower()
+            
+
+            if color in availableColors:
+
+                newRing = next(ring for ring in [ring1, ring2, ring3, ring4, ring5] if ring.color == color)
+                push(newRing)
+            else:
+                print("Invalid color. Please choose from the available colors.")
+        
+        elif userInput == "2":
+            pop()
+        
+        elif userInput == "3":
+            print("Exiting program.")
+            break  
+        
+        else:
+            print("Invalid option. Please select a valid option.")
+
+
+userChoice()
