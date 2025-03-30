@@ -1,14 +1,25 @@
 class Ring:
     colors = {
-        "red": "red",
-        "blue": "blue",
-        "green": "green",
-        "yellow": "yellow",
-        "orange": "orange"
+        "red": """
+        |---------RED---------|
+        """,
+        "blue": """
+           |--BLUE--|
+        """,
+        "green": """
+          |---GREEN---|
+        """,
+        "yellow": """
+         |----YELLOW----|
+        """,
+        "orange": """
+        |-----ORANGE-----|
+        """
     }
     
     def __init__(self, color):
-        self.color = self.colors.get(color, "unknown") 
+        self.color = color  
+        self.art = self.colors.get(color, "unknown")  
         self.onStack = False  
 
 ring1 = Ring("red")
@@ -38,8 +49,7 @@ def userChoice():
     while True:
         print("\nCurrent Stack (Top to Bottom):")
         for r in reversed(ringStack):
-            print(r.color)
-
+            print(r.art)
 
         availableColors = [ring.color for ring in [ring1, ring2, ring3, ring4, ring5] if not ring.onStack]
         print("\nAvailable colors to add:", ", ".join(availableColors))
@@ -55,9 +65,7 @@ def userChoice():
             
             color = input("What color ring would you like to add?: ").lower()
             
-
             if color in availableColors:
-
                 newRing = next(ring for ring in [ring1, ring2, ring3, ring4, ring5] if ring.color == color)
                 push(newRing)
             else:
